@@ -6,52 +6,28 @@ export class PageMediaStyles {
    static PANE_MARGIN_PX = 10;
 
    static CommonWrapper = styled(CoolStyles.Block)`
-      ${CoolStyles.align_center}
+      margin: 10px;
    `
 
-   static HeaderBlock = styled(CoolStyles.Block)`
-      border-bottom: 0.25rem solid #cccccc;
-      letter-spacing: 0.25rem;
-      margin-bottom: 0.25rem;
+   static NewItemPlaceholder = styled(CoolStyles.InlineBlock)`
+      ${CoolStyles.pointer}
+      ${CoolStyles.narrow_box_shadow}
+      ${CoolStyles.align_middle}
+      width: 161px;
+      height: 50px;
+      border: 2px solid #444444;
+      margin: 0.5rem;
+      border-radius: 0.25rem;
+      background-color: #eeeeee;
+      padding-top: 10px;
    `
 
-   static TitleSpan = styled.span`
-      ${CoolStyles.bold}
+   static NewItemPromptSpan = styled.span`
       ${CoolStyles.uppercase}
-      color: ${CoolColors.deep_blue};
-      font-size: 1.5rem;
-   `
-   static PromptLink = styled(CoolStyles.LinkSpan)`
-      font-size: 1rem;
-   `
-   static CommaBreak = styled(CoolStyles.InlineBlock)`
-      margin-right: 0.25rem;
-   `
-   static DetailsBasis = styled(CoolStyles.InlineBlock)`
-      ${CoolStyles.italic}
-      ${CoolStyles.align_bottom}
-      letter-spacing: 0;
+      ${CoolStyles.bold}
       color: #888888;
-      font-size: 0.90rem;
-      line-height: 1.5rem;
-   `
-
-   static ElementTitleSpan = styled.span`
-      ${CoolStyles.bold}
-      font-size: 1.125rem;
-      color: black;
-   `
-
-   static NumericSpan = styled.span`
-      ${CoolStyles.bold}
-      ${CoolStyles.monocase}
-      font-size: 1rem
-   `
-
-   static RightAlignedHeader = styled(PageMediaStyles.DetailsBasis)`
-      float: right;
-      line-height: 2rem;
-   `
+      font-size: 0.9rem;
+   `;
 }
 
 export default PageMediaStyles

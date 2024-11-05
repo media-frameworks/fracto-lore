@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactTimeAgo from "react-time-ago";
 
-import {PageMediaStyles as styles} from "./styles/PageMediaStyles";
 import MediaElementData from "./media/MediaElementData";
 import {MediaElementTypes} from "./media/MediaElementTypes";
 import MediaElementField from "./media/MediaElementField";
+import SectionPageHeader from "./main/SectionPageHeader";
+import {CoolDropdown} from "../common/ui/CoolImports";
+
+const TYPES_MENU = [
+   {label: "image", code: MediaElementTypes.FRACTO_IMAGE},
+]
 
 export class PageMedia extends Component {
 
@@ -16,6 +20,8 @@ export class PageMedia extends Component {
    state = {
       media_element_id: -1,
       media_element: null,
+      media_type: null,
+      types_dropdown: []
    }
 
    componentDidUpdate(prevProps, prevState, snapshot) {
@@ -34,50 +40,22 @@ export class PageMedia extends Component {
       })
    }
 
-   static render_details = (media_element) => {
-      return <styles.DetailsBasis>
-         <styles.ElementTitleSpan>"{media_element.meta.title}"</styles.ElementTitleSpan>
-         <styles.CommaBreak/>
-         <styles.NumericSpan>[{media_element.id}]</styles.NumericSpan>
-         <styles.CommaBreak/>
-         last modified: <ReactTimeAgo date={media_element.updated_at}/>
-      </styles.DetailsBasis>
+   select_media_type = (value) => {
+      this.setState({media_type: value, types_dropdown: []})
    }
 
-   render_header = () => {
-      const {media_element} = this.state
-      const element_details = media_element
-         ? PageMedia.render_details(media_element) : ''
-      const select_prompt = <styles.PromptLink
-         onClick={this.on_select_media}
-         key={'select-prompt'}>
-         select
-      </styles.PromptLink>
-      const create_prompt = <styles.PromptLink
-         onClick={this.on_create_media}
-         key={'create-prompt'}>
-         create
-      </styles.PromptLink>
-      const complete_message = [
-         select_prompt,
-         <styles.CommaBreak/>,
-         'or',
-         <styles.CommaBreak/>,
-         create_prompt,
-         <styles.CommaBreak/>,
-         'some'
-      ]
-      return <styles.HeaderBlock key={'common-header'}>
-         <styles.TitleSpan>Media</styles.TitleSpan>
-         {element_details}
-         <styles.RightAlignedHeader>{complete_message}</styles.RightAlignedHeader>
-      </styles.HeaderBlock>
+   on_create_media = (e) => {
+      const bounds_rect = e.target.getBoundingClientRect()
+      console.log('bounds_rect', bounds_rect)
+      const types_dropdown = <CoolDropdown
+         items={TYPES_MENU}
+         reference_rect={{top: bounds_rect.top + 20, right: 45}}
+         callback={this.select_media_type}
+      />
+      this.setState({types_dropdown})
    }
 
-   on_select_media = () => {
-   }
-
-   on_create_media = () => {
+   on_save_new_media = () => {
       MediaElementData.save_media_element({
          type: MediaElementTypes.FILE,
          part_of: -1,
@@ -93,10 +71,18 @@ export class PageMedia extends Component {
    }
 
    render() {
+      const {types_dropdown, media_type} = this.state
       const {width_px} = this.props
-      const header = this.render_header()
-      const element_field = <MediaElementField width_px={width_px}/>
-      return [header, element_field]
+      const header = <SectionPageHeader
+         section_name={'media'}
+         on_create_item={this.on_create_media}
+         on_select_item={this.on_select_media}
+      />
+      const element_field = <MediaElementField
+         media_type={media_type}
+         width_px={width_px}
+      />
+      return [header, element_field, types_dropdown]
    }
 }
 

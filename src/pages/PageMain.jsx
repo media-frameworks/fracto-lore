@@ -6,8 +6,12 @@ import AppPageMain from 'common/app/AppPageMain';
 import {PageMainStyles as styles} from "./styles/PageMainStyles";
 import MainLeftPane from "./main/MainLeftPane";
 
-import PageStats from "./PageStats";
+import PageArticles from "./PageArticles";
+import PageSidebars from "./PageSidebars";
+import PageGlossary from "./PageGlossary";
 import PageMedia from "./PageMedia";
+import PageStats from "./PageStats";
+import PageSubjects from "./PageSubjects";
 
 export const ID_SECTION_ARTICLES = 'id_section_articles'
 export const ID_SECTION_SIDEBAR = 'id_section_sidebar'
@@ -20,14 +24,17 @@ const ALL_SECTIONS = [
    {
       name: "Articles",
       id: ID_SECTION_ARTICLES,
+      component: PageArticles,
    },
    {
       name: "Sidebars",
       id: ID_SECTION_SIDEBAR,
+      component: PageSidebars,
    },
    {
       name: "Glossary",
       id: ID_SECTION_GLOSSARY,
+      component: PageGlossary,
    },
    {
       name: "Media",
@@ -42,6 +49,7 @@ const ALL_SECTIONS = [
    {
       name: "Subjects",
       id: ID_SECTION_SUBJECTS,
+      component: PageSubjects,
    },
 ]
 
@@ -88,10 +96,10 @@ export class PageMain extends Component {
       </styles.CommonWrapper>
 
       const right_side = <styles.CommonWrapper
-         key={'right-sidea'}
+         key={'right-side'}
          ref={right_pane_ref}/>
       if (right_pane_ref.current && section.component) {
-         const props ={width_px: right_width}
+         const props = {width_px: right_width}
          ReactDOM.render(
             React.createElement(section.component, props),
             right_pane_ref.current);
